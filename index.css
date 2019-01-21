@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: rgb(176, 238, 218);
+    background-color: rgb(178, 247, 225);
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
@@ -130,3 +130,14 @@ input[type=date] {
     background-color: rgb(75, 247, 89);
 }
 
+.sorting-box {
+  display: flex;
+  flex-direction: row;
+
+ 
+}
+.sorting-btn {
+  width: 140px;
+  height: 40px;
+  margin: 0 5px 0 5px;
+}

@@ -10,7 +10,15 @@ const
   newTaksPopup = document.querySelector("#task-box"),
   //task list
   tasklist = document.querySelector("#task-list"),
-  taskArray = [];
+  taskArray = [],
+  //sorting
+  dateSortBtn = document.querySelector("#sort-date-btn"),
+  textSortBtn = document.querySelector("#sort-text-btn"),
+  dateSortIcon = document.querySelector("#sort-date-icont"),
+  textSortIcon = document.querySelector("#sort-text-icon"),
+  currentSortSettings = { type: "date", direction: "up" };
+
+
 
 let id = 0;
 
@@ -50,6 +58,7 @@ taskInput.addEventListener("input", function () {
 });
 
 
+//new task creating
 saveTaskBtn.addEventListener("click", function () {
 
   checkInputValue(dateInput);
@@ -64,16 +73,20 @@ saveTaskBtn.addEventListener("click", function () {
     });
     id++;
     popupToggle();
+
     renderTaskList();
   };
 });
 
 
+// task creating 
 function renderTaskList() {
 
   while (tasklist.firstChild) {
     tasklist.removeChild(tasklist.firstChild);
   };
+
+  applySorting();
 
   for (let t of taskArray) {
 
@@ -139,10 +152,16 @@ function renderTaskList() {
 };
 
 
-
+// task deleting
 function deleteTask(id) {
   let indexForDel = taskArray.findIndex(t => t.id === id);
   taskArray.splice(indexForDel, 1);
 
   renderTaskList();
 };
+
+
+function applySorting() {
+  const {type, direction} = currentSortSettings;
+  console.log(type, direction)
+}

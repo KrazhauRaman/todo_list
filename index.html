@@ -6,6 +6,8 @@
     <meta charset="utf-8" />
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/flatly/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9dACWymWSkhCeCgbjV6xqS20Luu4ue6QnEvr+nMXpPMwIq/OB89AoRh27Flsrxzs" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="index.css">
     <title>ToDo list</title>
 </head>
@@ -14,7 +16,10 @@
     <div class="header-box">
         <div class="header">
             <button type="button" class="btn btn-success add-task-btn" id="add-task-btn">Add new task</button>
-            <div>sort</div>
+            <div class="sorting-box">
+                <button type="button" class="btn btn-outline-success sorting-btn" id="sort-date-btn">Sort by date&nbsp;&nbsp;<i class="fas fa-angle-down" id="sort-date-icon"></i></button>
+                <button type="button" class="btn btn-primary sorting-btn" id="sort-text-btn">Sort by text&nbsp;&nbsp;<i class="fas fa-angle-up" id="sort-text-icon"></i></button>
+            </div>
             <div>filter</div>
         </div>
     </div>
