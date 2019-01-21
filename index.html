@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9dACWymWSkhCeCgbjV6xqS20Luu4ue6QnEvr+nMXpPMwIq/OB89AoRh27Flsrxzs" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>ToDo list</title>
+</head>
+
+<body>
+    <div class="header-box">
+        <div class="header">
+            <button type="button" class="btn btn-success add-task-btn" id="add-task-btn">Add new task</button>
+            <div>sort</div>
+            <div>filter</div>
+        </div>
+    </div>
+    <div class="task-list" id="task-list">
+    </div>
+    <div class="add-task-box jumbotron" id="task-box">
+        <button id="close-btn" class="close-btn btn btn-danger" type="button">X</button>
+        <h3>Add new task</h3>
+        <input type="date" class="form-control" id="date-input">
+        <input type="text" class="form-control" placeholder="Enter task" id="task-input">
+        <button id="save-task-btn" class="btn btn-success save-task-btn">Save task</button>
+    </div>
+    <script src='index.js'></script>
+</body>
+
+</html>
