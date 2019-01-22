@@ -161,7 +161,90 @@ function deleteTask(id) {
 };
 
 
+//sorting
+dateSortBtn.addEventListener("click", e => setSortSettings(e));
+textSortBtn.addEventListener("click", e => setSortSettings(e));
+
+function setSortSettings(e) {
+
+  if (e.currentTarget.dataset.type === currentSortSettings.type) {
+
+    if (currentSortSettings.direction === "up") {
+      currentSortSettings.direction = "down";
+      e.currentTarget.lastChild.classList.remove("fa-angle-up");
+      e.currentTarget.lastChild.classList.add("fa-angle-down");
+    }
+    else {
+      currentSortSettings.direction = "up";
+      e.currentTarget.lastChild.classList.remove("fa-angle-down");
+      e.currentTarget.lastChild.classList.add("fa-angle-up");
+    }
+  }
+  else {
+
+    currentSortSettings.direction = "up";
+
+    if (currentSortSettings.type === "date") {
+      currentSortSettings.type = "text";
+
+      dateSortBtn.classList.remove("btn-outline-success");
+      dateSortBtn.classList.add("btn-primary");
+      dateSortBtn.lastChild.classList.remove("fa-angle-up");
+      dateSortBtn.lastChild.classList.remove("fa-angle-down");
+
+      textSortBtn.classList.add("btn-outline-success");
+      textSortBtn.classList.remove("btn-primary");
+      textSortBtn.lastChild.classList.add("fa-angle-up");
+
+    }
+    else {
+      currentSortSettings.type = "date";
+
+      textSortBtn.classList.remove("btn-outline-success");
+      textSortBtn.classList.add("btn-primary");
+      textSortBtn.lastChild.classList.remove("fa-angle-up");
+      textSortBtn.lastChild.classList.remove("fa-angle-down");
+
+      dateSortBtn.classList.add("btn-outline-success");
+      dateSortBtn.classList.remove("btn-primary");
+      dateSortBtn.lastChild.classList.add("fa-angle-up");
+    }
+  }
+
+  renderTaskList();
+}
+
+
 function applySorting() {
-  const {type, direction} = currentSortSettings;
-  console.log(type, direction)
+  const { type, direction } = currentSortSettings;
+
+  if (type === "date") {
+
+    taskArray.sort((a, b) => {
+
+      aDate = a.date.split("-");
+      bDate = b.date.split("-");
+
+      for (let i = 0; i < 3; i = i + 1) {
+        if (aDate[i] < bDate[i])
+          return -1;
+
+        if (aDate[i] > bDate[i])
+          return 1;
+      };
+      return 0;
+
+    });
+  }
+  else {
+
+    taskArray.sort((a, b) => {
+     return (a.task < b.task) ? -1 : (a.task > b.task) ? 1 : 0;
+    });
+  }
+
+  if (direction === "down") {
+    taskArray.reverse();
+  }
+
 }
