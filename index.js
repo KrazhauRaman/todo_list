@@ -16,9 +16,14 @@ const
   textSortBtn = document.querySelector("#sort-text-btn"),
   dateSortIcon = document.querySelector("#sort-date-icont"),
   textSortIcon = document.querySelector("#sort-text-icon"),
-  currentSortSettings = { type: "date", direction: "up" };
-
-
+  currentSortSettings = { type: "date", direction: "up" },
+  //filtering
+  dateFilterInput = document.querySelector("#filter-by-date"),
+  taskFIlterInput = document.querySelector("#filter-by-task"),
+  dateFilterClear = document.querySelector("#clear-filter-by-date"),
+  taskFIlterClear = document.querySelector("#clear-filter-by-task"),
+  currentFilters = { date: "", task: "" };
+let filteredTaskArray = [];
 
 let id = 0;
 
@@ -86,9 +91,10 @@ function renderTaskList() {
     tasklist.removeChild(tasklist.firstChild);
   };
 
+  generateFilteredTasklist();
   applySorting();
 
-  for (let t of taskArray) {
+  for (let t of filteredTaskArray) {
 
     const { id, date, task, completed } = t;
 
@@ -220,7 +226,7 @@ function applySorting() {
 
   if (type === "date") {
 
-    taskArray.sort((a, b) => {
+    filteredTaskArray.sort((a, b) => {
 
       aDate = a.date.split("-");
       bDate = b.date.split("-");
@@ -238,13 +244,66 @@ function applySorting() {
   }
   else {
 
-    taskArray.sort((a, b) => {
-     return (a.task < b.task) ? -1 : (a.task > b.task) ? 1 : 0;
+    filteredTaskArray.sort((a, b) => {
+      return (a.task < b.task) ? -1 : (a.task > b.task) ? 1 : 0;
     });
   }
 
   if (direction === "down") {
-    taskArray.reverse();
+    filteredTaskArray.reverse();
+  }
+}
+
+
+// filtering
+dateFilterInput.addEventListener("input", function () {
+  currentFilters.date = this.value;
+  renderTaskList();
+});
+
+dateFilterInput.addEventListener("blur", function () {
+  if (!this.value) {
+    this.type = "text";
+  }
+});
+
+taskFIlterInput.addEventListener("input", function () {
+  currentFilters.task = this.value;
+  renderTaskList();
+});
+
+dateFilterClear.addEventListener("click", function () {
+  dateFilterInput.value = "";
+  currentFilters.date = "";
+  renderTaskList();
+});
+
+taskFIlterClear.addEventListener("click", function () {
+  taskFIlterInput.value = "";
+  currentFilters.task = "";
+  renderTaskList();
+});
+
+
+function generateFilteredTasklist() {
+  const { date, task } = currentFilters;
+
+  if (!date && !task) {
+    filteredTaskArray = taskArray;
+    return;
   }
 
+  if (date) {
+    filteredTaskArray = taskArray.filter(t => t.date === date);
+  }
+
+  if (task) {
+    if (date) {
+      filteredTaskArray = filteredTaskArray.filter(t => t.task.search(task) >= 0);
+    }
+    else {
+      filteredTaskArray = taskArray.filter(t => t.task.search(task) >= 0);
+    }
+  }
 }
+

@@ -95,35 +95,33 @@ input[type=date] {
 }
 
 @keyframes appearing {
-  0%
-  {
-      opacity: 0;
-  }  
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
-
 .task-div-top {
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 20px 0px 20px;
-  align-items: center;
-  height: 80px;
-  transition: background-color 0.5s;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px 0px 20px;
+    align-items: center;
+    height: 80px;
+    transition: background-color 0.5s;
 }
 
 .delete-btn {
-  height: 40px;
+    height: 40px;
 }
 
 .task-div-text {
-  resize: none;
-  height: 100%;
-  width: 100%;
-  border: 0;
-  padding: 5px 20px 5px 20px;
+    resize: none;
+    height: 100%;
+    width: 100%;
+    border: 0;
+    padding: 5px 20px 5px 20px;
 }
 
 .completed {
@@ -131,13 +129,37 @@ input[type=date] {
 }
 
 .sorting-box {
-  display: flex;
-  flex-direction: row;
-
- 
+    display: flex;
+    flex-direction: row;
 }
+
 .sorting-btn {
-  width: 140px;
-  height: 40px;
-  margin: 0 5px 0 5px;
+    width: 140px;
+    height: 40px;
+    margin: 0 5px 0 5px;
+}
+
+.filter-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+}
+
+.filter-input-box {
+    height: 40px;
+    margin: 0;
+    margin: 0 5px 0 5px;
+}
+
+.filter-clean {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 40px;
+    width: 40px;
+}
+
+.filter-input {
+    height: 40px;
+
 }
