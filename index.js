@@ -1,4 +1,6 @@
 const
+  // local storage
+  storage = localStorage,
   //control elements
   addBtn = document.querySelector("#add-task-btn"),
   closeBtn = document.querySelector("#close-btn"),
@@ -10,7 +12,7 @@ const
   newTaksPopup = document.querySelector("#task-box"),
   //task list
   tasklist = document.querySelector("#task-list"),
-  taskArray = [],
+  taskArray = (loadTaskList()) ? JSON.parse(loadTaskList()) : [],
   //sorting
   dateSortBtn = document.querySelector("#sort-date-btn"),
   textSortBtn = document.querySelector("#sort-text-btn"),
@@ -23,10 +25,15 @@ const
   dateFilterClear = document.querySelector("#clear-filter-by-date"),
   taskFIlterClear = document.querySelector("#clear-filter-by-task"),
   currentFilters = { date: "", task: "" };
+
 let filteredTaskArray = [];
 
+//id for tasks id
 let id = 0;
 
+//if there are tasks in storage
+if (taskArray)
+renderTaskList();
 
 
 function popupToggle() {
@@ -79,12 +86,13 @@ saveTaskBtn.addEventListener("click", function () {
     id++;
     popupToggle();
 
+    saveTaskList();
     renderTaskList();
   };
 });
 
 
-// task creating 
+// task list creating 
 function renderTaskList() {
 
   while (tasklist.firstChild) {
@@ -163,6 +171,7 @@ function deleteTask(id) {
   let indexForDel = taskArray.findIndex(t => t.id === id);
   taskArray.splice(indexForDel, 1);
 
+  saveTaskList();
   renderTaskList();
 };
 
@@ -307,3 +316,12 @@ function generateFilteredTasklist() {
   }
 }
 
+
+//local storage operations
+function saveTaskList() {
+  storage.setItem("tasks", JSON.stringify(taskArray));
+}
+
+function loadTaskList() {
+  return storage.getItem("tasks");
+}
