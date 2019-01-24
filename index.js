@@ -163,7 +163,7 @@ function renderTaskList() {
     checkDiv.appendChild(completedLabel);
     taskDivTop.appendChild(deleteBtn);
 
-    return (taskDiv) ;
+    return (taskDiv);
   }
 
   for (let task of filteredTaskArray) {
