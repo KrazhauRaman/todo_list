@@ -23,8 +23,6 @@ const taskArray = (loadTaskList()) ? JSON.parse(loadTaskList()) : [];
 // sorting
 const dateSortBtn = document.querySelector('#sort-date-btn');
 const textSortBtn = document.querySelector('#sort-text-btn');
-// const dateSortIcon = document.querySelector('#sort-date-icont');
-// const textSortIcon = document.querySelector('#sort-text-icon');
 const currentSortSettings = { type: 'date', direction: 'up' };
 
 // filtering
