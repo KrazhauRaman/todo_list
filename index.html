@@ -1,51 +1,90 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8" />
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/flatly/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9dACWymWSkhCeCgbjV6xqS20Luu4ue6QnEvr+nMXpPMwIq/OB89AoRh27Flsrxzs" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-        crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/flatly/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-9dACWymWSkhCeCgbjV6xqS20Luu4ue6QnEvr+nMXpPMwIq/OB89AoRh27Flsrxzs"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          type="text/css"
+          href="index.css">
     <title>ToDo list</title>
 </head>
 
 <body>
     <div class="header-box">
         <div class="header">
-            <button type="button" class="btn btn-success add-task-btn" id="add-task-btn">Add new task</button>
+            <button type="button"
+                    class="btn btn-success add-task-btn"
+                    id="add-task-btn">Add new task</button>
             <div class="sorting-box">
-                <button type="button" class="btn btn-outline-success sorting-btn" id="sort-date-btn" data-type="date">Sort
-                    by date&nbsp;&nbsp;<i class="fas fa-angle-up" id="sort-date-icon"></i></button>
-                <button type="button" class="btn btn-primary sorting-btn" id="sort-text-btn" data-type="text">Sort by
-                    text&nbsp;&nbsp;<i class="fas" id="sort-text-icon"></i></button>
+                <button type="button"
+                        class="btn btn-outline-success sorting-btn"
+                        id="sort-date-btn"
+                        data-type="date">Sort by date&nbsp;&nbsp;
+                    <i class="fas fa-angle-up"
+                       id="sort-date-icon"></i>
+                </button>
+                <button type="button"
+                        class="btn btn-primary sorting-btn"
+                        id="sort-text-btn"
+                        data-type="text">Sort by text&nbsp;&nbsp;
+                    <i class="fas"
+                       id="sort-text-icon"></i></button>
             </div>
-            <div  class="filter-box">
+            <div class="filter-box">
                 <div class="form-group filter-input-box">
                     <div class="input-group mb-3">
-                        <input type="text" placeholder="Filter by task" class="form-control filter-input" id="filter-by-task">
-                        <button type="button" class="btn btn-danger filter-clean" id="clear-filter-by-task">X</button>
+                        <input type="text"
+                               placeholder="Filter by task"
+                               class="form-control filter-input"
+                               id="filter-by-task">
+                        <button type="button"
+                                class="btn btn-danger filter-clean"
+                                id="clear-filter-by-task">X</button>
                     </div>
                 </div>
                 <div class="form-group filter-input-box">
                     <div class="input-group mb-3">
-                        <input type="text" placeholder="Filter by date" class="form-control filter-input" onfocus="(this.type='date')" id="filter-by-date">
-                        <button type="button" class="btn btn-danger filter-clean"  id="clear-filter-by-date">X</button>
+                        <input type="text"
+                               placeholder="Filter by date"
+                               class="form-control filter-input"
+                               onfocus="(this.type='date')"
+                               id="filter-by-date">
+                        <button type="button"
+                                class="btn btn-danger filter-clean"
+                                id="clear-filter-by-date">X</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="task-list" id="task-list">
+    <div class="task-list"
+         id="task-list">
     </div>
-    <div class="add-task-box jumbotron" id="task-box">
-        <button id="close-btn" class="close-btn btn btn-danger" type="button">X</button>
+    <div class="add-task-box jumbotron"
+         id="task-box">
+        <button id="close-btn"
+                class="close-btn btn btn-danger"
+                type="button">X</button>
         <h3>Add new task</h3>
-        <input type="date" class="form-control" id="date-input">
-        <input type="text" class="form-control" placeholder="Enter task" id="task-input">
-        <button id="save-task-btn" class="btn btn-success save-task-btn">Save task</button>
+        <input type="date"
+               class="form-control"
+               id="date-input">
+        <input type="text"
+               class="form-control"
+               placeholder="Enter task"
+               id="task-input">
+        <button id="save-task-btn"
+                class="btn btn-success save-task-btn">Save task</button>
     </div>
     <script src='index.js'></script>
 </body>

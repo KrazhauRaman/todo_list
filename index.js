@@ -1,155 +1,160 @@
-const
-  // local storage
-  storage = localStorage,
-  //control elements
-  addBtn = document.querySelector("#add-task-btn"),
-  closeBtn = document.querySelector("#close-btn"),
-  saveTaskBtn = document.querySelector("#save-task-btn"),
-  //inputs
-  dateInput = document.querySelector("#date-input"),
-  taskInput = document.querySelector("#task-input"),
-  //new task popup
-  newTaksPopup = document.querySelector("#task-box"),
-  //task list
-  tasklist = document.querySelector("#task-list"),
-  taskArray = (loadTaskList()) ? JSON.parse(loadTaskList()) : [],
-  //sorting
-  dateSortBtn = document.querySelector("#sort-date-btn"),
-  textSortBtn = document.querySelector("#sort-text-btn"),
-  dateSortIcon = document.querySelector("#sort-date-icont"),
-  textSortIcon = document.querySelector("#sort-text-icon"),
-  currentSortSettings = { type: "date", direction: "up" },
-  //filtering
-  dateFilterInput = document.querySelector("#filter-by-date"),
-  taskFIlterInput = document.querySelector("#filter-by-task"),
-  dateFilterClear = document.querySelector("#clear-filter-by-date"),
-  taskFIlterClear = document.querySelector("#clear-filter-by-task"),
-  currentFilters = { date: "", task: "" };
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-undef */
+
+// local storage
+const storage = localStorage;
+
+// control elements
+const addBtn = document.querySelector('#add-task-btn');
+const closeBtn = document.querySelector('#close-btn');
+const saveTaskBtn = document.querySelector('#save-task-btn');
+
+// inputs
+const dateInput = document.querySelector('#date-input');
+const taskInput = document.querySelector('#task-input');
+
+// new task popup
+const newTaksPopup = document.querySelector('#task-box');
+
+// task list
+const tasklist = document.querySelector('#task-list');
+const taskArray = (loadTaskList()) ? JSON.parse(loadTaskList()) : [];
+
+// sorting
+const dateSortBtn = document.querySelector('#sort-date-btn');
+const textSortBtn = document.querySelector('#sort-text-btn');
+// const dateSortIcon = document.querySelector('#sort-date-icont');
+// const textSortIcon = document.querySelector('#sort-text-icon');
+const currentSortSettings = { type: 'date', direction: 'up' };
+
+// filtering
+const dateFilterInput = document.querySelector('#filter-by-date');
+const taskFIlterInput = document.querySelector('#filter-by-task');
+const dateFilterClear = document.querySelector('#clear-filter-by-date');
+const taskFIlterClear = document.querySelector('#clear-filter-by-task');
+const currentFilters = { date: '', task: '' };
 
 let filteredTaskArray = [];
 
-//id for tasks id
+// id for tasks id
 let id = 0;
 
-//if there are tasks in storage
-if (taskArray)
-renderTaskList();
+// if there are tasks in storage
+if (taskArray) {
+  renderTaskList();
+}
 
 
 function popupToggle() {
-  newTaksPopup.classList.toggle("appear");
-  dateInput.value = "";
-  taskInput.value = "";
-};
+  newTaksPopup.classList.toggle('appear');
+  dateInput.value = '';
+  taskInput.value = '';
+}
 
 
-addBtn.addEventListener("click", popupToggle);
-closeBtn.addEventListener("click", popupToggle);
+addBtn.addEventListener('click', popupToggle);
+closeBtn.addEventListener('click', popupToggle);
 
 
 // check for inputs values. if there is nothing in input user'll see error animation
 function checkInputValue(input) {
   if (!input.value) {
-    input.classList.add("error");
-    setTimeout(function () {
-      input.classList.remove("error");
+    input.classList.add('error');
+    setTimeout(() => {
+      input.classList.remove('error');
     }, 1000);
-  };
-};
+  }
+}
 
-dateInput.addEventListener("input", function () {
+dateInput.addEventListener('input', () => {
   if (this.value) {
-    this.classList.remove("error");
-  };
+    this.classList.remove('error');
+  }
 });
 
-taskInput.addEventListener("input", function () {
+taskInput.addEventListener('input', () => {
   if (this.value) {
-    this.classList.remove("error");
-  };
+    this.classList.remove('error');
+  }
 });
 
 
-//new task creating
-saveTaskBtn.addEventListener("click", function () {
-
+// new task creating
+saveTaskBtn.addEventListener('click', () => {
   checkInputValue(dateInput);
   checkInputValue(taskInput);
 
   if (dateInput.value && taskInput.value) {
-    taskArray.push({
-      id: id,
+    const newTask = {
+      id,
       date: dateInput.value,
       task: taskInput.value,
-      completed: false
-    });
-    id++;
+      completed: false,
+    };
+    taskArray.push(newTask);
+    id += 1;
     popupToggle();
 
     saveTaskList();
     renderTaskList();
-  };
+  }
 });
 
 
-// task list creating 
+// task list creating
 function renderTaskList() {
-
   while (tasklist.firstChild) {
     tasklist.removeChild(tasklist.firstChild);
-  };
+  }
 
   generateFilteredTasklist();
   applySorting();
 
-  for (let t of filteredTaskArray) {
+  function generateTaskHtml(task) {
+    const taskDiv = document.createElement('div');
+    const taskDivTop = document.createElement('div');
+    const dateSpan = document.createElement('span');
+    const checkDiv = document.createElement('div');
+    const completedCheck = document.createElement('input');
+    const completedLabel = document.createElement('label');
+    const deleteBtn = document.createElement('button');
+    const taskText = document.createElement('textarea');
 
-    const { id, date, task, completed } = t;
+    taskDiv.classList.add('task-div', 'card', 'border-primary', 'mb-3');
+    taskDivTop.classList.add('card-header', 'task-div-top');
+    if (task.completed) {
+      taskDivTop.classList.add('completed');
+    }
+    dateSpan.classList.add('task-div-date');
+    checkDiv.classList.add('custom-control', 'custom-checkbox');
+    completedCheck.classList.add('custom-control-input');
+    completedLabel.classList.add('custom-control-label');
+    deleteBtn.classList.add('btn', 'btn-danger', 'delete-btn');
+    taskText.classList.add('task-div-text');
 
-    const
-      taskDiv = document.createElement("div"),
-      taskDivTop = document.createElement("div"),
-      dateSpan = document.createElement("span"),
-      checkDiv = document.createElement("div"),
-      completedCheck = document.createElement("input"),
-      completedLabel = document.createElement("label"),
-      deleteBtn = document.createElement("button"),
-      taskText = document.createElement("textarea");
+    taskDiv.setAttribute('id', `task-div-${task.id}`);
+    completedCheck.setAttribute('type', 'checkbox');
+    completedCheck.setAttribute('id', `completedCheck-${task.id}`);
+    completedLabel.setAttribute('for', `completedCheck-${task.id}`);
+    taskText.setAttribute('disabled', true);
 
+    completedCheck.dataset.id = task.id;
 
-    taskDiv.classList.add("task-div", "card", "border-primary", "mb-3");
-    taskDivTop.classList.add("card-header", "task-div-top");
-    if (completed) taskDivTop.classList.add("completed");
-    dateSpan.classList.add("task-div-date");
-    checkDiv.classList.add("custom-control", "custom-checkbox");
-    completedCheck.classList.add("custom-control-input");
-    completedLabel.classList.add("custom-control-label");
-    deleteBtn.classList.add("btn", "btn-danger", "delete-btn");
-    taskText.classList.add("task-div-text");
-
-    taskDiv.setAttribute("id", `task-div-${id}`);
-    completedCheck.setAttribute("type", "checkbox");
-    completedCheck.setAttribute("id", `completedCheck-${id}`);
-    completedLabel.setAttribute("for", `completedCheck-${id}`);
-    taskText.setAttribute("disabled", true);
-
-    completedCheck.dataset.id = id;
-
-    dateSpan.innerHTML = date;
-    taskText.innerHTML = task;
-    completedCheck.checked = completed;
-    completedLabel.innerHTML = "Completed";
-    deleteBtn.innerHTML = "Delete";
+    dateSpan.innerHTML = task.date;
+    taskText.innerHTML = task.task;
+    completedCheck.checked = task.completed;
+    completedLabel.innerHTML = 'Completed';
+    deleteBtn.innerHTML = 'Delete';
 
 
-    completedCheck.addEventListener("input", function () {
-      taskDivTop.classList.toggle("completed");
-      t.completed = !t.completed;
+    completedCheck.addEventListener('input', () => {
+      taskDivTop.classList.toggle('completed');
+      task.completed = !task.completed;
     });
 
-    deleteBtn.addEventListener("click", function () {
-      deleteTask(id);
-    })
+    deleteBtn.addEventListener('click', () => {
+      deleteTask(task.id);
+    });
 
     taskDiv.appendChild(taskDivTop);
     taskDiv.appendChild(taskText);
@@ -159,70 +164,66 @@ function renderTaskList() {
     checkDiv.appendChild(completedLabel);
     taskDivTop.appendChild(deleteBtn);
 
-    tasklist.appendChild(taskDiv);
+    return (taskDiv);
+  }
 
-    taskDiv.classList.add("task-div-appear");
-  };
-};
+  for (let task of filteredTaskArray) {
+    tasklist.appendChild(generateTaskHtml(task));
+    tasklist.lastChild.classList.add('task-div-appear');
+  }
+}
 
 
 // task deleting
-function deleteTask(id) {
-  let indexForDel = taskArray.findIndex(t => t.id === id);
+function deleteTask(taskId) {
+  const indexForDel = taskArray.findIndex(t => t.id === taskId);
   taskArray.splice(indexForDel, 1);
 
   saveTaskList();
   renderTaskList();
-};
+}
 
 
-//sorting
-dateSortBtn.addEventListener("click", e => setSortSettings(e));
-textSortBtn.addEventListener("click", e => setSortSettings(e));
+// sorting
+dateSortBtn.addEventListener('click', e => setSortSettings(e));
+textSortBtn.addEventListener('click', e => setSortSettings(e));
 
 function setSortSettings(e) {
-
   if (e.currentTarget.dataset.type === currentSortSettings.type) {
-
-    if (currentSortSettings.direction === "up") {
-      currentSortSettings.direction = "down";
-      e.currentTarget.lastChild.classList.remove("fa-angle-up");
-      e.currentTarget.lastChild.classList.add("fa-angle-down");
+    if (currentSortSettings.direction === 'up') {
+      currentSortSettings.direction = 'down';
+      e.currentTarget.querySelector('i').classList.remove('fa-angle-up');
+      e.currentTarget.querySelector('i').classList.add('fa-angle-down');
+    } else {
+      currentSortSettings.direction = 'up';
+      e.currentTarget.querySelector('i').classList.remove('fa-angle-down');
+      e.currentTarget.querySelector('i').classList.add('fa-angle-up');
     }
-    else {
-      currentSortSettings.direction = "up";
-      e.currentTarget.lastChild.classList.remove("fa-angle-down");
-      e.currentTarget.lastChild.classList.add("fa-angle-up");
-    }
-  }
-  else {
+  } else {
+    currentSortSettings.direction = 'up';
 
-    currentSortSettings.direction = "up";
+    if (currentSortSettings.type === 'date') {
+      currentSortSettings.type = 'text';
 
-    if (currentSortSettings.type === "date") {
-      currentSortSettings.type = "text";
+      dateSortBtn.classList.remove('btn-outline-success');
+      dateSortBtn.classList.add('btn-primary');
+      dateSortBtn.querySelector('i').classList.remove('fa-angle-up');
+      dateSortBtn.querySelector('i').classList.remove('fa-angle-down');
 
-      dateSortBtn.classList.remove("btn-outline-success");
-      dateSortBtn.classList.add("btn-primary");
-      dateSortBtn.lastChild.classList.remove("fa-angle-up");
-      dateSortBtn.lastChild.classList.remove("fa-angle-down");
+      textSortBtn.classList.add('btn-outline-success');
+      textSortBtn.classList.remove('btn-primary');
+      textSortBtn.querySelector('i').classList.add('fa-angle-up');
+    } else {
+      currentSortSettings.type = 'date';
 
-      textSortBtn.classList.add("btn-outline-success");
-      textSortBtn.classList.remove("btn-primary");
-      textSortBtn.lastChild.classList.add("fa-angle-up");
+      textSortBtn.classList.remove('btn-outline-success');
+      textSortBtn.classList.add('btn-primary');
+      textSortBtn.querySelector('i').classList.remove('fa-angle-up');
+      textSortBtn.querySelector('i').classList.remove('fa-angle-down');
 
-    }
-    else {
-      currentSortSettings.type = "date";
-
-      textSortBtn.classList.remove("btn-outline-success");
-      textSortBtn.classList.add("btn-primary");
-      textSortBtn.lastChild.classList.remove("fa-angle-up");
-      textSortBtn.lastChild.classList.remove("fa-angle-down");
-
-      dateSortBtn.classList.add("btn-outline-success");
-      dateSortBtn.classList.remove("btn-primary");
-      dateSortBtn.lastChild.classList.add("fa-angle-up");
+      dateSortBtn.classList.add('btn-outline-success');
+      dateSortBtn.classList.remove('btn-primary');
+      dateSortBtn.querySelector('i').classList.add('fa-angle-up');
     }
   }
 
@@ -233,63 +234,56 @@ function setSortSettings(e) {
 function applySorting() {
   const { type, direction } = currentSortSettings;
 
-  if (type === "date") {
-
+  if (type === 'date') {
     filteredTaskArray.sort((a, b) => {
+      aDate = a.date.split('-');
+      bDate = b.date.split('-');
 
-      aDate = a.date.split("-");
-      bDate = b.date.split("-");
+      for (let i = 0; i < 3; i += 1) {
+        if (aDate[i] < bDate[i]) { return -1; }
 
-      for (let i = 0; i < 3; i = i + 1) {
-        if (aDate[i] < bDate[i])
-          return -1;
-
-        if (aDate[i] > bDate[i])
-          return 1;
-      };
+        if (aDate[i] > bDate[i]) { return 1; }
+      }
       return 0;
-
     });
-  }
-  else {
-
-    filteredTaskArray.sort((a, b) => {
-      return (a.task < b.task) ? -1 : (a.task > b.task) ? 1 : 0;
-    });
+  } else {
+    filteredTaskArray.sort(
+      (a, b) => a.task.localeCompare(b.task),
+    );
   }
 
-  if (direction === "down") {
+  if (direction === 'down') {
     filteredTaskArray.reverse();
   }
 }
 
 
 // filtering
-dateFilterInput.addEventListener("input", function () {
-  currentFilters.date = this.value;
+dateFilterInput.addEventListener('input', (e) => {
+  currentFilters.date = e.currentTarget.value;
   renderTaskList();
 });
 
-dateFilterInput.addEventListener("blur", function () {
-  if (!this.value) {
-    this.type = "text";
+dateFilterInput.addEventListener('blur', (e) => {
+  if (!e.currentTarget.value) {
+    e.currentTarget.type = 'text';
   }
 });
 
-taskFIlterInput.addEventListener("input", function () {
-  currentFilters.task = this.value;
+taskFIlterInput.addEventListener('input', (e) => {
+  currentFilters.task = e.currentTarget.value;
   renderTaskList();
 });
 
-dateFilterClear.addEventListener("click", function () {
-  dateFilterInput.value = "";
-  currentFilters.date = "";
+dateFilterClear.addEventListener('click', () => {
+  dateFilterInput.value = '';
+  currentFilters.date = '';
   renderTaskList();
 });
 
-taskFIlterClear.addEventListener("click", function () {
-  taskFIlterInput.value = "";
-  currentFilters.task = "";
+taskFIlterClear.addEventListener('click', () => {
+  taskFIlterInput.value = '';
+  currentFilters.task = '';
   renderTaskList();
 });
 
@@ -309,19 +303,18 @@ function generateFilteredTasklist() {
   if (task) {
     if (date) {
       filteredTaskArray = filteredTaskArray.filter(t => t.task.search(task) >= 0);
-    }
-    else {
+    } else {
       filteredTaskArray = taskArray.filter(t => t.task.search(task) >= 0);
     }
   }
 }
 
 
-//local storage operations
+// local storage operations
 function saveTaskList() {
-  storage.setItem("tasks", JSON.stringify(taskArray));
+  storage.setItem('tasks', JSON.stringify(taskArray));
 }
 
 function loadTaskList() {
-  return storage.getItem("tasks");
+  return storage.getItem('tasks');
 }
