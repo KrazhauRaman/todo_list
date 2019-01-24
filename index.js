@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
 
@@ -162,7 +163,7 @@ function renderTaskList() {
     checkDiv.appendChild(completedLabel);
     taskDivTop.appendChild(deleteBtn);
 
-    return (taskDiv);
+    return (taskDiv) ;
   }
 
   for (let task of filteredTaskArray) {
